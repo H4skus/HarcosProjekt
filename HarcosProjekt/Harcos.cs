@@ -10,14 +10,24 @@ namespace HarcosProjekt
         private string name;
         private int level, exp, health, startHealth, startDamage;
 
-        public Harcos(string name , int level, int exp, int health, int startHealth, int startDamage)
+        public Harcos(string name , List <int>status)
         {
             this.name = name;
-            this.level = level;
-            this.exp = exp;
-            this.health = health;
-            this.startHealth = startHealth;
-            this.startDamage = startDamage;
+            level = 1;
+            exp = 0;
+            startHealth = status[0];
+            startDamage = status[1];
+
         }
+
+        public string Name { get => name; set => name = value; }
+        public int Level { get => level; set => level = value; }
+        public int Exp { get => exp; set => exp = value; }
+        public int StartDamage { get => startDamage; }
+        public int StartHealth { get => startHealth; }
+        public int Health { get => health; set => health = value; }
+        public int Damage { get => startDamage + level; }
+        public int NextLevel { get => 10 + level * 5; }
+        public int MaxHealth { get => StartHealth + level * 3; }
     }
 }

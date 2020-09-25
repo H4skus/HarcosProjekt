@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HarcosProjekt
 {
@@ -6,7 +7,7 @@ namespace HarcosProjekt
     {
         static void Main(string[] args)
         {
-
+           
         }
     }
 }
