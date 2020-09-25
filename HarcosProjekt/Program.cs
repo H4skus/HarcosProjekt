@@ -5,16 +5,20 @@ namespace HarcosProjekt
 {
     class Program
     {
-        public static string name;
+        static Harcos player;
 
         static void Main(string[] args)
         {
             Start();
+            Console.Clear();
+            Console.WriteLine(player);
+            Console.ReadKey();
         }
 
 
         public static void Start()
         {
+            string name;
             int chosenChamp;
             Console.WriteLine("Add your username!");
             name = Console.ReadLine();
@@ -35,8 +39,7 @@ namespace HarcosProjekt
                 }
                 isNumber =Int32.TryParse(Console.ReadLine(), out chosenChamp);
             }
-
-
+            player = new Harcos(name, chosenChamp);
         }
     }
 }

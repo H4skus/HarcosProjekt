@@ -7,8 +7,13 @@ namespace HarcosProjekt
     class Harcos
     {
 
-        private string name;
+        private string name, role;
         private int level, exp, health, startHealth, startDamage;
+
+        public override string ToString()
+        {
+            return string.Format($"\t\t\t\t\t\t{name} - {role} \n\t\t\t\tLVL:{level} \n\t\t\t\tEXP: {exp}/{NextLevel} \n\t\t\t\tHP: {health}/{MaxHealth} \n\t\t\t\tDMG: {Damage}");
+        }
 
         public Harcos(string name ,int status)
         {
@@ -17,14 +22,17 @@ namespace HarcosProjekt
                 case 2:
                     startDamage = 4;
                     startHealth = 12;
+                    role = "Archer";
                     break;
                 case 3:
                     startHealth = 8;
                     startDamage = 5;
+                    role = "Mage";
                     break;
                 default:
                     startHealth = 15;
                     startDamage = 3;
+                    role = "Warrior";
                     break;
             }
             this.name = name;
