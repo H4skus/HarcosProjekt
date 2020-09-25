@@ -15,9 +15,9 @@ namespace HarcosProjekt
             return string.Format($"\t\t\t\t\t\t{name} - {role} \n\t\t\t\tLVL:{level} \n\t\t\t\tEXP: {exp}/{NextLevel} \n\t\t\t\tHP: {health}/{MaxHealth} \n\t\t\t\tDMG: {Damage}");
         }
 
-        public Harcos(string name ,int status)
+        public Harcos(string name ,int template)
         {
-            switch (status)
+            switch (template)
             {
                 case 2:
                     startDamage = 4;
@@ -43,6 +43,8 @@ namespace HarcosProjekt
         }
 
         public string Name { get => name; set => name = value; }
+
+        public string Role { get => role; }
         public int Level { get => level; set => level = value; }
         public int Exp { get => exp; set => exp = value; }
         public int StartDamage { get => startDamage; }

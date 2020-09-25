@@ -6,12 +6,17 @@ namespace HarcosProjekt
     class Program
     {
         static Harcos player;
+        static Harcos bot;
+        static string message;
 
         static void Main(string[] args)
         {
+            Random rnd = new Random();
             Start();
             Console.Clear();
-            Console.WriteLine(player);
+            bot = new Harcos("Dunny", rnd.Next(1,4));
+            Scan();
+            Fight();
             Console.ReadKey();
         }
 
@@ -40,6 +45,50 @@ namespace HarcosProjekt
                 isNumber =Int32.TryParse(Console.ReadLine(), out chosenChamp);
             }
             player = new Harcos(name, chosenChamp);
+        }
+
+        public static void Fight()
+        {
+            Console.WriteLine(player);
+            Console.WriteLine("\n");
+            Console.WriteLine(bot);
+        }
+
+        public static void Scan()
+        {
+            if (player.Role == bot.Role)
+            {
+                Console.Clear();
+                message = "Error!";
+                Console.WriteLine("\t\t\t\t\t\t    "+message);
+            }
+            else if(player.Health == 0)
+            {
+                Console.Clear();
+                Console.WriteLine(player);
+                message = "Your health is too low to fight...";
+                Console.WriteLine(message);
+            }
+        }
+        public static void isDeath()
+        {
+            if (player.Health == 0)
+            {
+                message = "You died...";
+                Console.WriteLine(message);
+                bot.Exp += 10;
+            }
+            else if (bot.Health == 0)
+            {
+                message = "Your enemy's died.";
+                Console.WriteLine(message);
+                player.Exp += 10;
+            }
+            else
+            {
+                player.Exp += 5;
+                bot.Exp += 5;
+            }
         }
     }
 }
