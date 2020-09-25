@@ -10,13 +10,27 @@ namespace HarcosProjekt
         private string name;
         private int level, exp, health, startHealth, startDamage;
 
-        public Harcos(string name , List <int>status)
+        public Harcos(string name ,int status)
         {
+            switch (status)
+            {
+                case 2:
+                    startDamage = 4;
+                    startHealth = 12;
+                    break;
+                case 3:
+                    startHealth = 8;
+                    startDamage = 5;
+                    break;
+                default:
+                    startHealth = 15;
+                    startDamage = 3;
+                    break;
+            }
             this.name = name;
             level = 1;
             exp = 0;
-            startHealth = status[0];
-            startDamage = status[1];
+            health = MaxHealth;
 
         }
 
