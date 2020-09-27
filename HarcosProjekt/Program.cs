@@ -17,8 +17,8 @@ namespace HarcosProjekt
             addEnemys();
             Start();
             menu();
-            listEnemy();
-            //Fight();
+            chooseEnemy();
+            Fight();
             Console.ReadKey();
         }
 
@@ -51,18 +51,19 @@ namespace HarcosProjekt
 
         public static void Fight()
         {
-            string command;
+
+            Console.Clear();
             Console.WriteLine("Press a key to fight.. \n press 'f' to leave");
-            command = Console.ReadLine();
-            if (command == "f")
+            string command = Console.ReadLine();
+            do
             {
-                menu();
-            }
-            else
-            {
+                Console.WriteLine(player);
+                Console.WriteLine(enemy[chooseEnemy()]);
                 attack();
-            }
-            
+
+            } while (command != "f");
+            menu();
+
         }
 
         public static void Scan()
@@ -93,6 +94,7 @@ namespace HarcosProjekt
         {
             if (player.Health < 0)
             {
+                enemy[chooseEnemy()].Exp += 10;
                 Console.Clear();
                 message = "You died...";
                 Console.WriteLine(message);
@@ -102,6 +104,7 @@ namespace HarcosProjekt
             }
             else if (bot.Health < 0)
             {
+                player.Exp += 10;
                 Console.Clear();
                 message = "Your enemy's died.";
                 Console.WriteLine(message);
@@ -109,30 +112,23 @@ namespace HarcosProjekt
                 Console.ReadKey();
                 menu();
             }
+            else
+            {
+                enemy[chooseEnemy()].Exp += 5;
+                player.Exp += 5;
+                Fight();
+            }
+        }
+
+        public static void heal()
+        {
+
         }
 
         public static void attack()
         {
-            bot.Health -= player.Damage;
-            player.Health -= bot.Damage;
-            if (bot.Health<0)
-            {
-                player.Exp += 10;
-            }
-            else if (player.Health<0)
-            {
-                bot.Exp += 10;
-            }
-            else if (bot.Health>0 && player.Health>0)
-            {
-                player.Exp += 5;
-                bot.Exp += 5;
-            }
-            Console.Clear();
-            Console.WriteLine(player);
-            Console.WriteLine("\n");
-            Console.WriteLine(bot);
-            isDeath();
+            player.Health -= enemy[chooseEnemy()].Damage;
+            enemy[chooseEnemy()].Health -= player.Damage;
             Fight();
         }
 
@@ -140,9 +136,15 @@ namespace HarcosProjekt
         {
             Console.Clear();
             Console.WriteLine(player + "\n\n\t\t\t\t\t\tPress a key to find enemy..");
-            Console.ReadKey();
+            Console.WriteLine("\n\t\t\t\t\t\t   Press 'h' to heal..");
+            string command = Console.ReadLine();
+            if (command == "h")
+            {
+                heal();
+            }
             Console.Clear();
             Console.WriteLine(player+"\n\n\t\t\t\t\t\tChoose your enemy..\n\n");
+            listEnemy();
         }
 
         public static void addEnemys()
@@ -165,6 +167,13 @@ namespace HarcosProjekt
             {
                 Console.WriteLine("("+i+")"+enemy[i]);
             }
+        }
+        public static int chooseEnemy()
+        {
+            Int32.TryParse(Console.ReadLine(), out int choosen);
+            Console.Clear();
+            return choosen;
+
         }
     }
 }
