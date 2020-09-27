@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace HarcosProjekt
 {
@@ -9,14 +10,16 @@ namespace HarcosProjekt
         static Harcos bot;
         static string message;
         static Random rnd = new Random();
+        static List<Harcos> enemy = new List<Harcos>();
 
         static void Main(string[] args)
         {
+            addEnemys();
             Start();
-            Console.Clear();
-            bot = new Harcos("Dunny", rnd.Next(1,4));
-            Scan();
-            Fight();
+            menu();
+            listEnemy();
+            //Fight();
+            Console.ReadKey();
         }
 
 
@@ -136,7 +139,32 @@ namespace HarcosProjekt
         public static void menu()
         {
             Console.Clear();
-            Console.WriteLine(player);
+            Console.WriteLine(player + "\n\n\t\t\t\t\t\tPress a key to find enemy..");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine(player+"\n\n\t\t\t\t\t\tChoose your enemy..\n\n");
+        }
+
+        public static void addEnemys()
+        { 
+            StreamReader sr = new StreamReader("harcosok.csv", System.Text.Encoding.Default);
+            int i = 0;
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                string[] elem = line.Split(';');
+                enemy.Add(new Harcos(elem[0],Convert.ToInt32(elem[1])));
+                enemy[i].Name = elem[0];
+                enemy[i].Template = Convert.ToInt32(elem[1]);
+                i++;
+            }
+        }
+        public static void listEnemy()
+        {
+            for (int i = 0; i < enemy.Count; i++)
+            {
+                Console.WriteLine("("+i+")"+enemy[i]);
+            }
         }
     }
 }

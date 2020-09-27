@@ -8,7 +8,7 @@ namespace HarcosProjekt
     {
 
         private string name, role;
-        private int level, exp, health, startHealth, startDamage;
+        private int level, exp, health, startHealth, startDamage, template;
 
         public override string ToString()
         {
@@ -17,7 +17,8 @@ namespace HarcosProjekt
 
         public Harcos(string name ,int template)
         {
-            switch (template)
+            this.template = template;
+            switch (this.template)
             {
                 case 2:
                     startDamage = 4;
@@ -53,5 +54,6 @@ namespace HarcosProjekt
         public int Damage { get => startDamage + level; }
         public int NextLevel { get => 10 + level * 5; }
         public int MaxHealth { get => StartHealth + level * 3; }
+        public int Template { get => template; set => template = value; }
     }
 }
