@@ -49,15 +49,17 @@ namespace HarcosProjekt
         public static void Fight()
         {
             string command;
-            do
+            Console.WriteLine("Press a key to fight.. \n press 'f' to leave");
+            command = Console.ReadLine();
+            if (command == "f")
             {
-                Console.WriteLine("Press a key to fight!");
-                Console.ReadKey();
+                menu();
+            }
+            else
+            {
                 attack();
-                Console.WriteLine("Press 'f' to leave , or press any key to contiune attack.");
-                command = Console.ReadLine();
-            } while (command != "f" || !isDeath());
-            menu();
+            }
+            
         }
 
         public static void Scan()
@@ -84,32 +86,25 @@ namespace HarcosProjekt
                 Console.WriteLine(message);
             }
         }
-        public static bool isDeath()
+        public static void isDeath()
         {
             if (player.Health < 0)
             {
-                bot.Exp += 10;
                 Console.Clear();
                 message = "You died...";
                 Console.WriteLine(message);
                 Console.WriteLine("Press a key..");
                 Console.ReadKey();
-                return true;
+                menu();
             }
             else if (bot.Health < 0)
             {
-                player.Exp += 10;
+                Console.Clear();
                 message = "Your enemy's died.";
                 Console.WriteLine(message);
                 Console.WriteLine("Press a key..");
                 Console.ReadKey();
-                return true;
-            }
-            else
-            {
-                player.Exp += 5;
-                bot.Exp += 5;
-                return false;
+                menu();
             }
         }
 
@@ -117,11 +112,25 @@ namespace HarcosProjekt
         {
             bot.Health -= player.Damage;
             player.Health -= bot.Damage;
-            isDeath();
+            if (bot.Health<0)
+            {
+                player.Exp += 10;
+            }
+            else if (player.Health<0)
+            {
+                bot.Exp += 10;
+            }
+            else if (bot.Health>0 && player.Health>0)
+            {
+                player.Exp += 5;
+                bot.Exp += 5;
+            }
             Console.Clear();
             Console.WriteLine(player);
             Console.WriteLine("\n");
             Console.WriteLine(bot);
+            isDeath();
+            Fight();
         }
 
         public static void menu()
