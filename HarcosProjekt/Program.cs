@@ -19,7 +19,6 @@ namespace HarcosProjekt
             menu();
             chooseEnemy();
             Fight();
-            Console.ReadKey();
         }
 
 
@@ -51,12 +50,12 @@ namespace HarcosProjekt
 
         public static void Fight()
         {
-
             Console.Clear();
             Console.WriteLine("Press a key to fight.. \n press 'f' to leave");
             string command = Console.ReadLine();
             do
             {
+                Console.Clear();
                 Console.WriteLine(player);
                 Console.WriteLine(enemy[chooseEnemy()]);
                 attack();
@@ -68,19 +67,20 @@ namespace HarcosProjekt
 
         public static void Scan()
         {
-            Console.Clear();
-            Console.WriteLine(player);
-            Console.WriteLine("\n");
-            Console.WriteLine(bot);
-            if (player.Role == bot.Role)
+            if (player.Exp == player.NextLevel)
             {
-                Console.Clear();
-                message = "Error!";
-                Console.WriteLine("\t\t\t\t\t\t    "+message);
-                bot = new Harcos("Dunny", rnd.Next(1, 4));
-                Console.WriteLine("Press a key to find a new enenmy ");
-                Console.ReadKey();
-                Scan();
+                player.Level++;
+            }
+            else if (enemy[chooseEnemy()].Exp == enemy[chooseEnemy()].NextLevel)
+            {
+                enemy[chooseEnemy()].Level++;
+            }
+            else if (enemy[chooseEnemy()].Health == 0)
+            {
+
+                message = "Your enemy's health too low to fight..";
+                Console.WriteLine(message);
+                menu();
             }
             else if(player.Health == 0)
             {
@@ -88,6 +88,7 @@ namespace HarcosProjekt
                 Console.WriteLine(player);
                 message = "Your health is too low to fight...";
                 Console.WriteLine(message);
+                menu();
             }
         }
         public static void isDeath()
@@ -129,6 +130,7 @@ namespace HarcosProjekt
         {
             player.Health -= enemy[chooseEnemy()].Damage;
             enemy[chooseEnemy()].Health -= player.Damage;
+            Scan();
             Fight();
         }
 
